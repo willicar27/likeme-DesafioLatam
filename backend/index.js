@@ -21,7 +21,7 @@ app.get("/like", async (req, res) => {
         return res.json(like);
     }catch (error) {
         console.log(error);
-        return res.status(500).json ({ message: "Error interno en el servidor" });
+        return res.status(500).json ({ message: "Error interno en el servidor GET" });
     }
 });
 
@@ -39,7 +39,7 @@ app.get("/like/:id", async (req, res) => {
         res.json(like);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Error interno en el servidor"});
+        return res.status(500).json({ message: "Error interno en el servidor GET:id"});
     }
 });
 
@@ -63,6 +63,39 @@ app.post("/like", async (req, res) => {
         return res.status(201).json(like);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Error interno en el servidor"});
+        return res.status(500).json({ message: "Error interno en el servidor Post"});
+    }
+});
+
+//PUT likeme
+
+app.put("/like/:id", async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const like = await likeModel.update(id);
+        if (!like) {
+            return res.status(404).json({ message: "No se esta realizando la modificación"});
+        }
+        return res.json(like);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error interno en el servidor PUT"})
+    }
+})
+
+//DELETE likeme
+
+app.delete("/like/:id", async (res, req) => {
+    const id = req.params.id;
+    try {
+        const like = await likeModel.delete(id);
+        if (!like) {
+            return res.status(404).json({ message: "No se esta Borrando el Like" });
+        }
+        return res.json({ message: "Like eliminado"});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error interno en el servidor Delete"});
     }
 });
