@@ -71,9 +71,10 @@ app.post("/like", async (req, res) => {
 
 app.put("/like/:id", async(req, res) => {
     const id = req.params.id;
+    const { titulo, img, descripcion, likes } = req.body;
 
     try {
-        const like = await likeModel.update(id);
+        const like = await likeModel.update(id, titulo, img, descripcion, likes);
         if (!like) {
             return res.status(404).json({ message: "No se esta realizando la modificación"});
         }
@@ -86,10 +87,10 @@ app.put("/like/:id", async(req, res) => {
 
 //DELETE likeme
 
-app.delete("/like/:id", async (res, req) => {
+app.delete("/like/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        const like = await likeModel.delete(id);
+        const like = await likeModel.remove(id);
         if (!like) {
             return res.status(404).json({ message: "No se esta Borrando el Like" });
         }

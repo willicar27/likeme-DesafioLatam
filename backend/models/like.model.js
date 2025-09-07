@@ -19,14 +19,14 @@ const create = async (like) => {
 
 const update = async (id, titulo, img, descripcion, likes) => {
     const query = 
-    "UPDATE posts SET titulo = COALESCE($2, titulo), img = COALESCE($3, img), descripcion = COALESCE($4, descripcion), likes = COALESCE($5, likes) WHERE id = $1 RETURNING *"
+    "UPDATE posts SET titulo = COALESCE($2, titulo), img = COALESCE($3, img), descripcion = COALESCE($4, descripcion), likes = COALESCE($5, likes) WHERE id = $1 RETURNING *";
     const values = [id, titulo, img, descripcion, likes];
     const { rows } = await pool.query(query, values);
     return rows[0];
-;}
+};
 
 const remove = async (id) => {
-    const query = "DELETE FROM posts WHERE id = $1 RETURNING *"
+    const query = "DELETE FROM posts WHERE id = $1 RETURNING *";
     const { rows } = await pool.query(query, [id]);
     return rows[0];
 };
