@@ -1,4 +1,4 @@
-import { likeModel } from "../models/like.model";
+import { likeModel } from "../models/like.model.js";
 
 const read = async (req, res) => {
     try {
